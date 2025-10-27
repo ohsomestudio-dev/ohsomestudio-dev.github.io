@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Signature Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .editor-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .editor-container h2 {
+            margin-top: 0;
+            color: #0780BD;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .update-btn {
+            padding: 10px 20px;
+            background-color: #0780BD;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .update-btn:hover {
+            background-color: #065a8d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="editor-container">
+        <h2>Edit Signature Information</h2>
+        <div class="form-group">
+            <label for="name-input">Name:</label>
+            <input type="text" id="name-input" value="Dr. Mincheol Shin">
+        </div>
+        <div class="form-group">
+            <label for="title-input">Job Title:</label>
+            <input type="text" id="title-input" value="Managing Director / 대표 / 董事总经理">
+        </div>
+        <div class="form-group">
+            <label for="direct-input">Direct Number:</label>
+            <input type="text" id="direct-input" value="+44(0)23 8001 3702">
+        </div>
+        <div class="form-group">
+            <label for="email-input">Email Address:</label>
+            <input type="email" id="email-input" value="mincheol.shin@echovista.co.uk">
+        </div>
+        <button class="update-btn" onclick="updateSignature()">Update Signature</button>
+    </div>
+
+    <div id="email-signature" style="position: relative;">
+        <button id="copy-signature-btn" onclick="copySignature()"
+            style="position: absolute; top: 10px; right: 10px; padding: 8px 16px; background-color: #0780BD; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-family: Arial, sans-serif; z-index: 1000;">
+            Copy Signature
+        </button>
+        <table cellpadding="0" cellspacing="0" border="0"
+            style="background-color: #ffffff; padding: 20px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;">
+            <tr>
+                <td style="width: 100px; vertical-align: top; padding-right: 0;">
+                    <a href="https://www.echovista.co.uk" target="_blank" style="text-decoration: none; border: none;">
+                        <img src="https://ohsomestudio-dev.github.io/echovista/EchoVista-Logo-Icon_200.png"
+                            alt="echovista Logo" width="70" height="77" style="display: block; border: 0;" />
+                    </a>
+                </td>
+                <td style="vertical-align: top; padding-left: 0;">
+                    <p id="sig-name" style="margin: 0; padding: 0; font-size: 24px; color: #0780BD; line-height: 1.2;">
+                        Dr. Mincheol Shin
+                    </p>
+                    <p id="sig-title"
+                        style="margin: 0; padding: 0; font-size: 14px; color: #222222; font-weight: normal; line-height: 1.2; margin-bottom: 5px;">
+                        Managing Director / 대표 / 董事总经理
+                    </p>
+                    <hr style="border: none; border-top: 2px solid #0780BD; margin: 8px 0;" />
+
+                    <p style="margin: 0; padding: 0; font-size: 11px; color: #555555; line-height: 1.4;">
+                        ECHOVISTA Ultrasound Surface Cleaning Ltd.<br />
+                        Unit 2 <font color="#0780BD">|</font> Sleepy Hollow Business Park <font color="#0780BD">|</font>
+                        Ampfield<br />
+                        Romsey <font color="#0780BD">|</font> Hampshire <font color="#0780BD">|</font> SO51 9AW
+                    </p>
+                    <hr style="border: none; border-top: 1px solid #cbcbcb; margin: 8px 0;" />
+
+                    <table cellpadding="0" cellspacing="0" border="0"
+                        style="font-size: 12px; color: #555555; margin-top: 10px;">
+                        <tr>
+                            <td style="padding: 0; vertical-align: top; width: 15px; color: #0780BD; ">t.</td>
+                            <td style="padding: 0; vertical-align: top;">
+                                <a href="tel:+4402380013720" style="color: #555555; text-decoration: none;">+44(0)23
+                                    8001
+                                    3720</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0; vertical-align: top; width: 15px; color: #0780BD; ">d.</td>
+                            <td style="padding: 0; vertical-align: top;">
+                                <a id="sig-direct-link" href="tel:+4402380013702"
+                                    style="color: #555555; text-decoration: none;">
+                                    <span id="sig-direct">+44(0)23 8001 3702</span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0; vertical-align: top; color: #0780BD; ">e.</td>
+                            <td colspan="3" style="padding: 0; vertical-align: top;">
+                                <a id="sig-email-link" href="mailto:mincheol.shin@echovista.co.uk"
+                                    style="color: #555555; text-decoration: none;">
+                                    <span id="sig-email">mincheol.shin@echovista.co.uk</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function updateSignature() {
+            const name = document.getElementById('name-input').value;
+            const title = document.getElementById('title-input').value;
+            const direct = document.getElementById('direct-input').value;
+            const email = document.getElementById('email-input').value;
+
+            document.getElementById('sig-name').textContent = name;
+            document.getElementById('sig-title').textContent = title;
+            document.getElementById('sig-direct').textContent = direct;
+            document.getElementById('sig-email').textContent = email;
+
+            const directFormatted = direct.replace(/[^0-9+]/g, '');
+            document.getElementById('sig-direct-link').href = 'tel:' + directFormatted;
+            document.getElementById('sig-email-link').href = 'mailto:' + email;
+
+            alert('Signature updated successfully!');
+        }
+
+        function copySignature() {
+            const signatureDiv = document.getElementById('email-signature');
+            const button = document.getElementById('copy-signature-btn');
+
+            const tempButton = button.style.display;
+            button.style.display = 'none';
+
+            const range = document.createRange();
+            range.selectNodeContents(signatureDiv);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    setTimeout(function () {
+                        button.textContent = originalText;
+                    }, 2000);
+                }
+            } catch (err) {
+                alert('Failed to copy signature. Please copy manually.');
+            }
+
+            selection.removeAllRanges();
+            button.style.display = tempButton;
+        }
+    </script>
+</body>
+
+</html>
